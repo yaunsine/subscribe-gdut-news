@@ -1,2 +1,17 @@
+<<<<<<< HEAD
 # gdut-news
 subscribe campus news to email, a python program.
+=======
+# Gdut-news
+Subscribe campus news to email, a python program.
+
+### Preliminary work
+modify the file `config.ini`, fill in your personal information.
+
+### How to run?
+Only need to double-click on file `app.bat` 
+
+
+### Disclaim
+All actions are at your own risk if you use it.
+>>>>>>> 282d0a3c27fad6945f81ca25b8d6ec0e29ac26ab

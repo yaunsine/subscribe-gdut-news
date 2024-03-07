@@ -5,6 +5,9 @@ import time
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from myConfig import *
+
 def fetch_data_and_send_email():
     url = "https://oas.gdut.edu.cn/seeyon/ajax.do?method=ajaxAction&managerName=newsDataManager&rnd=66369"
     headers = {
@@ -28,8 +31,9 @@ def fetch_data_and_send_email():
         "managerMethod": "findListDatas",
         "arguments": '[{"pageSize":"20","pageNo":1,"listType":"1","spaceType":"2","spaceId":"","typeId":"","condition":"publishDepartment","textfield1":"","textfield2":"","myNews":"","fragmentId":"5854888065150372255","ordinal":"0","panelValue":"designated_value"}]'
     }
-
-    response = requests.post(url, headers=headers, data=payload)
+    session = requests.Session()
+    session.trust_env = False
+    response = session.post(url, headers=headers, data=payload)
     if response.status_code == 200:
         data = json.loads(response.text)
         news_list = list(data['list'])
@@ -46,11 +50,16 @@ def fetch_data_and_send_email():
 
 def send_email(data):
     # 设置发件人邮箱信息
-    sender_email = "1580909148@qq.com"
-    sender_password = "zpqyixjoftpkfjcf"
+    # print(from_email)
+    # print(from_pwd)
+    # print(port)
+    # print(server_address)
+    # print(to_email)
+    sender_email = from_email
+    sender_password = from_pwd
 
     # 设置收件人邮箱信息
-    receiver_email = "1580909148@qq.com"
+    receiver_email = to_email
     now_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
 
@@ -65,12 +74,12 @@ def send_email(data):
     msg.attach(body)
 
     # 发送邮件
-    with smtplib.SMTP('smtp.qq.com', 587) as smtp:
+    with smtplib.SMTP(server_address, port) as smtp:
         smtp.ehlo()
         smtp.starttls()
         smtp.login(sender_email, sender_password)
         smtp.send_message(msg)
-    print('发送成功!')
+    print(f'发送成功!{now_time}')
 
 
 def plan_time():
