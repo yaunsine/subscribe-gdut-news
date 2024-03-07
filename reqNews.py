@@ -5,6 +5,7 @@ import time
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from myConfig import *
 
 def fetch_data_and_send_email():
@@ -30,8 +31,9 @@ def fetch_data_and_send_email():
         "managerMethod": "findListDatas",
         "arguments": '[{"pageSize":"20","pageNo":1,"listType":"1","spaceType":"2","spaceId":"","typeId":"","condition":"publishDepartment","textfield1":"","textfield2":"","myNews":"","fragmentId":"5854888065150372255","ordinal":"0","panelValue":"designated_value"}]'
     }
-
-    response = requests.post(url, headers=headers, data=payload)
+    session = requests.Session()
+    session.trust_env = False
+    response = session.post(url, headers=headers, data=payload)
     if response.status_code == 200:
         data = json.loads(response.text)
         news_list = list(data['list'])
@@ -77,7 +79,7 @@ def send_email(data):
         smtp.starttls()
         smtp.login(sender_email, sender_password)
         smtp.send_message(msg)
-    print('发送成功!')
+    print(f'发送成功!{now_time}')
 
 
 def plan_time():
