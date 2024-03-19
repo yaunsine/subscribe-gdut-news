@@ -12,3 +12,7 @@ Create a window service, bind the `.bat` program. [NSSM](https://nssm.cc/downloa
 
 ### Disclaim
 All actions are at your own risk if you use it.
+
+
+### Email Figure
+<img src="https://gitee.com/lsir34567/drawing-bed/raw/master/github/imgs/wx_20240319172823.jpg" width="120px"/>
